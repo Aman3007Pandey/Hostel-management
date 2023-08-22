@@ -12,7 +12,8 @@ const port=3001;
 app.use(cors());
 app.use(json());
 app.use(cookieParser());
-app.use(bodyParser());
+app.use(bodyParser.json({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 // middleware
 
 import roomRouter from './routes/roomRoute.js';
