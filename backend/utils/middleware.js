@@ -1,7 +1,7 @@
 import { isTokenValid } from "./jwt.js";
 
 const mw = async (req, res, next) => {
-  const token = req.cookies.token;
+  const token = req.params.id;
   if (!token) {
     res.locals._id = undefined;
     res.locals.email = undefined;

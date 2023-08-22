@@ -3,7 +3,8 @@ import complainModel from "../model/complainModel.js";
 
 export const addComplainController = async (req, res) => {
   try {
-    const { location, title,desc, phone } = req.body;
+    // console.log(req.body);
+    const { location, title, desc, phone } = req.body;
     //validations
     if (!location) {
       return res.send({ error: "Location is Required" });
@@ -18,12 +19,13 @@ export const addComplainController = async (req, res) => {
       return res.send({ message: "Phone is Required" });
     }
     const {_id} = res.locals;
+    // console.log(_id);
     const userData = await userModel.findById(_id);
     var x = new Date();
     var date = x.toLocaleString([], {
         hour12: true,
     });
-    
+    // console.log(userData);
     //save
     const complain = await new complainModel({
         userId: userData._id,
