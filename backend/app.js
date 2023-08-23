@@ -12,19 +12,20 @@ const port=3001;
 app.use(cors());
 app.use(json());
 app.use(cookieParser());
-app.use(bodyParser());
+app.use(bodyParser.json({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 // middleware
 
 import roomRouter from './routes/roomRoute.js';
 import userRouter from './routes/userRoute.js';
 import complainRouter from "./routes/complainRoute.js";
-import mw from './utils/middleware.js';
+// import mw from './utils/middleware.js';
 
 
 const MONGO_URL="mongodb+srv://amanpandey3007:1234@cluster0.ogpwasy.mongodb.net/?retryWrites=true&w=majority";
 
 
-app.use('/',mw);
+// app.use('/',mw);
 app.use('/api/v1',roomRouter);
 app.use('/api/v1',userRouter);
 app.use('/api/v1',complainRouter);

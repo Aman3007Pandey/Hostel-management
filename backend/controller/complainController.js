@@ -3,7 +3,8 @@ import complainModel from "../model/complainModel.js";
 
 export const addComplainController = async (req, res) => {
   try {
-    const { location, title,desc, phone } = req.body;
+    // console.log(req.body);
+    const { location, title, desc, phone } = req.body;
     //validations
     if (!location) {
       return res.send({ error: "Location is Required" });
@@ -18,12 +19,13 @@ export const addComplainController = async (req, res) => {
       return res.send({ message: "Phone is Required" });
     }
     const {_id} = res.locals;
+    // console.log(_id);
     const userData = await userModel.findById(_id);
     var x = new Date();
     var date = x.toLocaleString([], {
         hour12: true,
     });
-    
+    // console.log(userData);
     //save
     const complain = await new complainModel({
         userId: userData._id,
@@ -116,6 +118,34 @@ export const deleteComplain = async(req,res) =>{
     });
   }
 }
+
+export const updateComplain = async (req, res) => {
+  const id = req.params.id;
+  try {
+    // let deletedData = await complainModel.findById(id);
+    let updatedData = await complainModel.updateOne(
+      { _id: id },
+      { $set: { assigned: "student" } }
+    );
+    if (!updatedData) {
+      return res
+        .status(200)
+        .send({ success: false, message: "Data Not Found" });
+    }
+    //console.log('data',updatedData );
+    return res
+      .status(200)
+      .send({ success: true, message: "Status Updated successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error in updating the status of Complain",
+      error,
+    });
+  }
+};
+
 
 export const userdata = async (req, res) => {
   try {
