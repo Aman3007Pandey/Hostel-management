@@ -145,6 +145,32 @@ export const updateComplain = async (req, res) => {
     });
   }
 };
+export const assignToSAdmin = async (req, res) => {
+  const id = req.params.id;
+  try {
+    // let deletedData = await complainModel.findById(id);
+    let updatedData = await complainModel.updateOne(
+      { _id: id },
+      { $set: { assigned: "superAdmin" } }
+    );
+    if (!updatedData) {
+      return res
+        .status(200)
+        .send({ success: false, message: "Data Not Found" });
+    }
+    //console.log('data',updatedData );
+    return res
+      .status(200)
+      .send({ success: true, message: "Status Updated successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error in updating the status of Complain",
+      error,
+    });
+  }
+};
 
 
 export const userdata = async (req, res) => {
