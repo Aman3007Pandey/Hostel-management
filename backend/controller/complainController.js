@@ -57,7 +57,7 @@ export const addComplainController = async (req, res) => {
 export const getSingleUserComplain = async(req,res)=>{
     try {
         const { _id } = res.locals;
-        const complainList = await complainModel.find({userId: _id});
+        const complainList = await complainModel.find({userId: _id}).sort({ assigned: -1 });
        if(complainList){
         return res.status(200).json(complainList);
        }else{
@@ -76,7 +76,7 @@ export const getSingleUserComplain = async(req,res)=>{
 
 export const getAllComplains = async(req,res)=>{
   try {
-    let data = await complainModel.find({});
+    let data = await complainModel.find({}).sort({ assigned: 1 });
     if (!data) {
       return res
         .status(200)
