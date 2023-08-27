@@ -57,7 +57,7 @@ export const addComplainController = async (req, res) => {
 export const getSingleUserComplain = async(req,res)=>{
     try {
         const { _id } = res.locals;
-        const complainList = await complainModel.find({userId: _id});
+        const complainList = await complainModel.find({userId: _id}).sort({ assigned: -1 });
        if(complainList){
         return res.status(200).json(complainList);
        }else{
@@ -76,7 +76,7 @@ export const getSingleUserComplain = async(req,res)=>{
 
 export const getAllComplains = async(req,res)=>{
   try {
-    let data = await complainModel.find({});
+    let data = await complainModel.find({}).sort({ assigned: 1 });
     if (!data) {
       return res
         .status(200)
@@ -126,6 +126,32 @@ export const updateComplain = async (req, res) => {
     let updatedData = await complainModel.updateOne(
       { _id: id },
       { $set: { assigned: "student" } }
+    );
+    if (!updatedData) {
+      return res
+        .status(200)
+        .send({ success: false, message: "Data Not Found" });
+    }
+    //console.log('data',updatedData );
+    return res
+      .status(200)
+      .send({ success: true, message: "Status Updated successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error in updating the status of Complain",
+      error,
+    });
+  }
+};
+export const assignToSAdmin = async (req, res) => {
+  const id = req.params.id;
+  try {
+    // let deletedData = await complainModel.findById(id);
+    let updatedData = await complainModel.updateOne(
+      { _id: id },
+      { $set: { assigned: "superAdmin" } }
     );
     if (!updatedData) {
       return res
