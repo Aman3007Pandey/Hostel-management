@@ -19,6 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 import roomRouter from './routes/roomRoute.js';
 import userRouter from './routes/userRoute.js';
 import complainRouter from "./routes/complainRoute.js";
+import messRouter from "./routes/messRoute.js";
 // import mw from './utils/middleware.js';
 
 
@@ -29,6 +30,7 @@ const MONGO_URL="mongodb+srv://amanpandey3007:1234@cluster0.ogpwasy.mongodb.net/
 app.use('/api/v1',roomRouter);
 app.use('/api/v1',userRouter);
 app.use('/api/v1',complainRouter);
+app.use('/api/v1',messRouter);
 
 const start=async()=>{
    try {
