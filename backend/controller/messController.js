@@ -1,4 +1,5 @@
 import Mess from "../model/messModel.js";
+import userModel from "../model/userModel.js";
 
 export const addMenu=async(req,res)=>{
    
@@ -70,4 +71,59 @@ export const getPresentMenu=async(req,res)=>{
         success:true,
         food,
     })
+}
+
+export const getUsers = async(req,res)=>{
+    const users=await userModel.find({role:"student"}).sort({isMessComitee:-1});
+    if(users){    
+        return res.status(201).json({
+          success: true,
+          users,
+        });
+    }else{
+        return res.status(400).json({
+          success: false,
+          msg: "Cant fetch Users",
+        });
+    }
+}
+export const giveAccess = async(req,res)=>{
+    const id = (req.params.id);
+     try {
+       const updateUser = await userModel.updateOne(
+         { _id: id },
+         { $set: { isMessComitee: true } }
+       );
+    //    console.log(updateUser);
+       if (!updateUser) {
+         return res.status(400).json({ success: false, message: "Data Not Found" });
+       }
+       return res.status(200).json({ success: true, message: "Status Updated successfully" });
+     } catch (error) {
+       res.status(500).send({
+         success: false,
+         message: "Error in updating the Access",
+         error,
+       });
+     }
+}
+export const removeAccess = async(req,res)=>{
+    const id=req.params.id;
+     try {
+       const updateUser = await userModel.updateOne(
+         { _id: id },
+         { $set: { isMessComitee: false } }
+       );
+    //    console.log(updateUser);
+       if (!updateUser) {
+         return res.status(400).json({ success: false, message: "Data Not Found" });
+       }
+       return res.status(200).json({ success: true, message: "Status Updated successfully" });
+     } catch (error) {
+       res.status(500).send({
+         success: false,
+         message: "Error in updating the Access",
+         error,
+       });
+     }
 }
