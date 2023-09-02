@@ -129,7 +129,7 @@ export const updateComplain = async (req, res) => {
     );
     if (!updatedData) {
       return res
-        .status(200)
+        .status(400)
         .send({ success: false, message: "Data Not Found" });
     }
     //console.log('data',updatedData );

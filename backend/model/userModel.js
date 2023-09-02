@@ -27,28 +27,32 @@ const userSchema = new mongoose.Schema(
     hostel: {
       type: String,
       required: true,
-      enum: ['BH1', 'BH2', 'GH1']
+      enum: ["BH1", "BH2", "GH1"],
     },
     role: {
       type: String,
-      enum: ['student', 'admin', 'superAdmin'],
-      default: 'student',
+      enum: ["student", "admin", "superAdmin"],
+      default: "student",
       required: true,
     },
-    roomNo:{
-      type:String,
-      default:"",
+    isMessComitee: {
+      type: Boolean,
+      default: false
     },
-    branch:{
-      type:String,
+    roomNo: {
+      type: String,
+      default: "",
     },
-    batch:{
-      type:String,
+    branch: {
+      type: String,
     },
-    bloodGrp:{
-      type:String,
-      enum:['A+','A-','O+','AB+','AB-']
-    }
+    batch: {
+      type: String,
+    },
+    bloodGrp: {
+      type: String,
+      enum: ["A+", "A-", "O+", "AB+", "AB-"],
+    },
   },
   { timestamps: true }
 );
