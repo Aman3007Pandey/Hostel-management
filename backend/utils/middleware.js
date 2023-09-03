@@ -7,7 +7,7 @@ const mw = async (req, res, next) => {
     res.locals.email = undefined;
     res.locals.name = undefined;
     res.locals.hostel=undefined;
-    // console.log(undefined,undefined,undefined,undefined);
+    console.log(undefined,undefined,undefined,undefined);
     next();
   } else {
     const payload = isTokenValid({ token });
