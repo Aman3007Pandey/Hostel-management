@@ -110,7 +110,7 @@ export const loginController = async (req, res) => {
       hostel:user.hostel,
     }
     const token = attachCookiesToResponse({res, user: payload});
-    res.status(200).send({
+    res.status(200).json({
       success: true,
       message: "login successfully",
       user: {
@@ -121,6 +121,7 @@ export const loginController = async (req, res) => {
         phone: user.phone,
         hostel: user.hostel,
         role: user.role,
+        isMessComitee: user.isMessComitee,
         payload,
       }, token
     });
